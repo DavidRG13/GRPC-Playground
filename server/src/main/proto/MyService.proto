@@ -1,0 +1,18 @@
+syntax="proto3";
+package token;
+option java_package = "com.williamhill.protobuf";
+
+service EmployeesService {
+    rpc GetBookByIsbn(GetEmployeeByIdRequest) returns (Employee){}
+}
+
+message GetEmployeeByIdRequest {
+    string id =1;
+}
+
+message Employee {
+    string firstname = 1;
+    string lastname = 2;
+    int32 id = 3;
+    double salary = 4;
+}
