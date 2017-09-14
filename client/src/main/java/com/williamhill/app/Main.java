@@ -2,7 +2,7 @@ package com.williamhill.app;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.williamhill.protobuf.EmployeeJson;
-import com.williamhill.protobuf.EmployeeProto.Employee;
+import com.williamhill.protobuf.EmployeeService.Employee;
 import java.io.IOException;
 import org.apache.http.HttpHeaders;
 import org.apache.http.client.methods.CloseableHttpResponse;
