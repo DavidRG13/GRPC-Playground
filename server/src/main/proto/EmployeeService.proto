@@ -3,7 +3,7 @@ package token;
 option java_package = "com.williamhill.protobuf";
 
 service EmployeesService {
-    rpc GetBookByIsbn(GetEmployeeByIdRequest) returns (Employee){}
+    rpc GetEmployeeById(GetEmployeeByIdRequest) returns (Employee){}
 }
 
 message GetEmployeeByIdRequest {

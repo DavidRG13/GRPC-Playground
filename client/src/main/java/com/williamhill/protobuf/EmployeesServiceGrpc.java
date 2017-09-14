@@ -19,7 +19,7 @@ import static io.grpc.stub.ServerCalls.asyncUnimplementedStreamingCall;
  */
 @javax.annotation.Generated(
     value = "by gRPC proto compiler (version 1.6.1)",
-    comments = "Source: MyService.proto")
+    comments = "Source: EmployeeService.proto")
 public final class EmployeesServiceGrpc {
 
   private EmployeesServiceGrpc() {}
@@ -28,16 +28,16 @@ public final class EmployeesServiceGrpc {
 
   // Static method descriptors that strictly reflect the proto.
   @io.grpc.ExperimentalApi("https://github.com/grpc/grpc-java/issues/1901")
-  public static final io.grpc.MethodDescriptor<com.williamhill.protobuf.MyService.GetEmployeeByIdRequest,
-      com.williamhill.protobuf.MyService.Employee> METHOD_GET_BOOK_BY_ISBN =
-      io.grpc.MethodDescriptor.<com.williamhill.protobuf.MyService.GetEmployeeByIdRequest, com.williamhill.protobuf.MyService.Employee>newBuilder()
+  public static final io.grpc.MethodDescriptor<EmployeeService.GetEmployeeByIdRequest,
+      EmployeeService.Employee> METHOD_GET_EMPLOYEE_BY_ID =
+      io.grpc.MethodDescriptor.<EmployeeService.GetEmployeeByIdRequest, EmployeeService.Employee>newBuilder()
           .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
           .setFullMethodName(generateFullMethodName(
-              "token.EmployeesService", "GetBookByIsbn"))
+              "token.EmployeesService", "GetEmployeeById"))
           .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-              com.williamhill.protobuf.MyService.GetEmployeeByIdRequest.getDefaultInstance()))
+              EmployeeService.GetEmployeeByIdRequest.getDefaultInstance()))
           .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-              com.williamhill.protobuf.MyService.Employee.getDefaultInstance()))
+              EmployeeService.Employee.getDefaultInstance()))
           .build();
 
   /**
@@ -69,20 +69,20 @@ public final class EmployeesServiceGrpc {
 
     /**
      */
-    public void getBookByIsbn(com.williamhill.protobuf.MyService.GetEmployeeByIdRequest request,
-        io.grpc.stub.StreamObserver<com.williamhill.protobuf.MyService.Employee> responseObserver) {
-      asyncUnimplementedUnaryCall(METHOD_GET_BOOK_BY_ISBN, responseObserver);
+    public void getEmployeeById(EmployeeService.GetEmployeeByIdRequest request,
+        io.grpc.stub.StreamObserver<EmployeeService.Employee> responseObserver) {
+      asyncUnimplementedUnaryCall(METHOD_GET_EMPLOYEE_BY_ID, responseObserver);
     }
 
     @Override public final io.grpc.ServerServiceDefinition bindService() {
       return io.grpc.ServerServiceDefinition.builder(getServiceDescriptor())
           .addMethod(
-            METHOD_GET_BOOK_BY_ISBN,
+            METHOD_GET_EMPLOYEE_BY_ID,
             asyncUnaryCall(
               new MethodHandlers<
-                com.williamhill.protobuf.MyService.GetEmployeeByIdRequest,
-                com.williamhill.protobuf.MyService.Employee>(
-                  this, METHODID_GET_BOOK_BY_ISBN)))
+                EmployeeService.GetEmployeeByIdRequest,
+                EmployeeService.Employee>(
+                  this, METHODID_GET_EMPLOYEE_BY_ID)))
           .build();
     }
   }
@@ -107,10 +107,10 @@ public final class EmployeesServiceGrpc {
 
     /**
      */
-    public void getBookByIsbn(com.williamhill.protobuf.MyService.GetEmployeeByIdRequest request,
-        io.grpc.stub.StreamObserver<com.williamhill.protobuf.MyService.Employee> responseObserver) {
+    public void getEmployeeById(EmployeeService.GetEmployeeByIdRequest request,
+        io.grpc.stub.StreamObserver<EmployeeService.Employee> responseObserver) {
       asyncUnaryCall(
-          getChannel().newCall(METHOD_GET_BOOK_BY_ISBN, getCallOptions()), request, responseObserver);
+          getChannel().newCall(METHOD_GET_EMPLOYEE_BY_ID, getCallOptions()), request, responseObserver);
     }
   }
 
@@ -134,9 +134,9 @@ public final class EmployeesServiceGrpc {
 
     /**
      */
-    public com.williamhill.protobuf.MyService.Employee getBookByIsbn(com.williamhill.protobuf.MyService.GetEmployeeByIdRequest request) {
+    public EmployeeService.Employee getEmployeeById(EmployeeService.GetEmployeeByIdRequest request) {
       return blockingUnaryCall(
-          getChannel(), METHOD_GET_BOOK_BY_ISBN, getCallOptions(), request);
+          getChannel(), METHOD_GET_EMPLOYEE_BY_ID, getCallOptions(), request);
     }
   }
 
@@ -160,14 +160,14 @@ public final class EmployeesServiceGrpc {
 
     /**
      */
-    public com.google.common.util.concurrent.ListenableFuture<com.williamhill.protobuf.MyService.Employee> getBookByIsbn(
-        com.williamhill.protobuf.MyService.GetEmployeeByIdRequest request) {
+    public com.google.common.util.concurrent.ListenableFuture<EmployeeService.Employee> getEmployeeById(
+        EmployeeService.GetEmployeeByIdRequest request) {
       return futureUnaryCall(
-          getChannel().newCall(METHOD_GET_BOOK_BY_ISBN, getCallOptions()), request);
+          getChannel().newCall(METHOD_GET_EMPLOYEE_BY_ID, getCallOptions()), request);
     }
   }
 
-  private static final int METHODID_GET_BOOK_BY_ISBN = 0;
+  private static final int METHODID_GET_EMPLOYEE_BY_ID = 0;
 
   private static final class MethodHandlers<Req, Resp> implements
       io.grpc.stub.ServerCalls.UnaryMethod<Req, Resp>,
@@ -186,9 +186,9 @@ public final class EmployeesServiceGrpc {
     @SuppressWarnings("unchecked")
     public void invoke(Req request, io.grpc.stub.StreamObserver<Resp> responseObserver) {
       switch (methodId) {
-        case METHODID_GET_BOOK_BY_ISBN:
-          serviceImpl.getBookByIsbn((com.williamhill.protobuf.MyService.GetEmployeeByIdRequest) request,
-              (io.grpc.stub.StreamObserver<com.williamhill.protobuf.MyService.Employee>) responseObserver);
+        case METHODID_GET_EMPLOYEE_BY_ID:
+          serviceImpl.getEmployeeById((EmployeeService.GetEmployeeByIdRequest) request,
+              (io.grpc.stub.StreamObserver<EmployeeService.Employee>) responseObserver);
           break;
         default:
           throw new AssertionError();
@@ -209,7 +209,7 @@ public final class EmployeesServiceGrpc {
   private static final class EmployeesServiceDescriptorSupplier implements io.grpc.protobuf.ProtoFileDescriptorSupplier {
     @Override
     public com.google.protobuf.Descriptors.FileDescriptor getFileDescriptor() {
-      return com.williamhill.protobuf.MyService.getDescriptor();
+      return EmployeeService.getDescriptor();
     }
   }
 
@@ -223,7 +223,7 @@ public final class EmployeesServiceGrpc {
         if (result == null) {
           serviceDescriptor = result = io.grpc.ServiceDescriptor.newBuilder(SERVICE_NAME)
               .setSchemaDescriptor(new EmployeesServiceDescriptorSupplier())
-              .addMethod(METHOD_GET_BOOK_BY_ISBN)
+              .addMethod(METHOD_GET_EMPLOYEE_BY_ID)
               .build();
         }
       }
