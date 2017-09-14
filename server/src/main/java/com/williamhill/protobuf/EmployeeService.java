@@ -4,7 +4,7 @@
 package com.williamhill.protobuf;
 
 public final class EmployeeService {
-  private EmployeeService() {}
+  public EmployeeService() {}
   public static void registerAllExtensions(
       com.google.protobuf.ExtensionRegistryLite registry) {
   }
@@ -19,14 +19,9 @@ public final class EmployeeService {
       com.google.protobuf.MessageOrBuilder {
 
     /**
-     * <code>string id = 1;</code>
+     * <code>int32 id = 1;</code>
      */
-    String getId();
-    /**
-     * <code>string id = 1;</code>
-     */
-    com.google.protobuf.ByteString
-        getIdBytes();
+    int getId();
   }
   /**
    * Protobuf type {@code token.GetEmployeeByIdRequest}
@@ -41,7 +36,7 @@ public final class EmployeeService {
       super(builder);
     }
     private GetEmployeeByIdRequest() {
-      id_ = "";
+      id_ = 0;
     }
 
     @Override
@@ -72,10 +67,9 @@ public final class EmployeeService {
               }
               break;
             }
-            case 10: {
-              String s = input.readStringRequireUtf8();
+            case 8: {
 
-              id_ = s;
+              id_ = input.readInt32();
               break;
             }
           }
@@ -103,37 +97,12 @@ public final class EmployeeService {
     }
 
     public static final int ID_FIELD_NUMBER = 1;
-    private volatile Object id_;
+    private int id_;
     /**
-     * <code>string id = 1;</code>
+     * <code>int32 id = 1;</code>
      */
-    public String getId() {
-      Object ref = id_;
-      if (ref instanceof String) {
-        return (String) ref;
-      } else {
-        com.google.protobuf.ByteString bs = 
-            (com.google.protobuf.ByteString) ref;
-        String s = bs.toStringUtf8();
-        id_ = s;
-        return s;
-      }
-    }
-    /**
-     * <code>string id = 1;</code>
-     */
-    public com.google.protobuf.ByteString
-        getIdBytes() {
-      Object ref = id_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (String) ref);
-        id_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+    public int getId() {
+      return id_;
     }
 
     private byte memoizedIsInitialized = -1;
@@ -148,8 +117,8 @@ public final class EmployeeService {
 
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      if (!getIdBytes().isEmpty()) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 1, id_);
+      if (id_ != 0) {
+        output.writeInt32(1, id_);
       }
       unknownFields.writeTo(output);
     }
@@ -159,8 +128,9 @@ public final class EmployeeService {
       if (size != -1) return size;
 
       size = 0;
-      if (!getIdBytes().isEmpty()) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, id_);
+      if (id_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(1, id_);
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -178,8 +148,8 @@ public final class EmployeeService {
       GetEmployeeByIdRequest other = (GetEmployeeByIdRequest) obj;
 
       boolean result = true;
-      result = result && getId()
-          .equals(other.getId());
+      result = result && (getId()
+          == other.getId());
       result = result && unknownFields.equals(other.unknownFields);
       return result;
     }
@@ -192,7 +162,7 @@ public final class EmployeeService {
       int hash = 41;
       hash = (19 * hash) + getDescriptor().hashCode();
       hash = (37 * hash) + ID_FIELD_NUMBER;
-      hash = (53 * hash) + getId().hashCode();
+      hash = (53 * hash) + getId();
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -322,7 +292,7 @@ public final class EmployeeService {
       }
       public Builder clear() {
         super.clear();
-        id_ = "";
+        id_ = 0;
 
         return this;
       }
@@ -388,9 +358,8 @@ public final class EmployeeService {
 
       public Builder mergeFrom(GetEmployeeByIdRequest other) {
         if (other == GetEmployeeByIdRequest.getDefaultInstance()) return this;
-        if (!other.getId().isEmpty()) {
-          id_ = other.id_;
-          onChanged();
+        if (other.getId() != 0) {
+          setId(other.getId());
         }
         this.mergeUnknownFields(other.unknownFields);
         onChanged();
@@ -419,71 +388,28 @@ public final class EmployeeService {
         return this;
       }
 
-      private Object id_ = "";
+      private int id_ ;
       /**
-       * <code>string id = 1;</code>
+       * <code>int32 id = 1;</code>
        */
-      public String getId() {
-        Object ref = id_;
-        if (!(ref instanceof String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          String s = bs.toStringUtf8();
-          id_ = s;
-          return s;
-        } else {
-          return (String) ref;
-        }
+      public int getId() {
+        return id_;
       }
       /**
-       * <code>string id = 1;</code>
+       * <code>int32 id = 1;</code>
        */
-      public com.google.protobuf.ByteString
-          getIdBytes() {
-        Object ref = id_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
-              com.google.protobuf.ByteString.copyFromUtf8(
-                  (String) ref);
-          id_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
-      }
-      /**
-       * <code>string id = 1;</code>
-       */
-      public Builder setId(
-          String value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  
+      public Builder setId(int value) {
+        
         id_ = value;
         onChanged();
         return this;
       }
       /**
-       * <code>string id = 1;</code>
+       * <code>int32 id = 1;</code>
        */
       public Builder clearId() {
         
-        id_ = getDefaultInstance().getId();
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>string id = 1;</code>
-       */
-      public Builder setIdBytes(
-          com.google.protobuf.ByteString value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-        
-        id_ = value;
+        id_ = 0;
         onChanged();
         return this;
       }
@@ -1344,7 +1270,7 @@ public final class EmployeeService {
   static {
     String[] descriptorData = {
       "\n\025EmployeeService.proto\022\005token\"$\n\026GetEmp" +
-      "loyeeByIdRequest\022\n\n\002id\030\001 \001(\t\"K\n\010Employee" +
+      "loyeeByIdRequest\022\n\n\002id\030\001 \001(\005\"K\n\010Employee" +
       "\022\021\n\tfirstname\030\001 \001(\t\022\020\n\010lastname\030\002 \001(\t\022\n\n" +
       "\002id\030\003 \001(\005\022\016\n\006salary\030\004 \001(\0012W\n\020EmployeesSe" +
       "rvice\022C\n\017GetEmployeeById\022\035.token.GetEmpl" +

@@ -2,6 +2,7 @@ package com.williamhill.app;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.williamhill.json.EmployeeJson;
+import com.williamhill.protobuf.EmployeeClient;
 import com.williamhill.protobuf.EmployeeService.Employee;
 import java.io.IOException;
 import org.apache.http.HttpHeaders;
@@ -39,41 +40,55 @@ public class Main {
 
         CloseableHttpClient httpclient = HttpClients.createDefault();
 
-        long start = System.nanoTime();
+        long start = System.currentTimeMillis();
         HttpGet httpGet = new HttpGet("http://localhost:8080/employee/12");
         httpGet.addHeader(HttpHeaders.ACCEPT, "application/x-protobuf");
         CloseableHttpResponse execute = httpclient.execute(httpGet);
         Employee employee = Employee.parseFrom(execute.getEntity().getContent());
-        System.out.println("getProto = " + (System.nanoTime() - start));
-        System.out.println("employee = " + employee);
+        System.out.println("getProto = " + (System.currentTimeMillis() - start));
+        //System.out.println("employee = " + employee);
 
         ObjectMapper mapper = new ObjectMapper();
 
-        start = System.nanoTime();
+        start = System.currentTimeMillis();
         HttpGet get = new HttpGet("http://localhost:8080/employee/12");
         get.addHeader(HttpHeaders.ACCEPT, "application/json");
         CloseableHttpResponse execute2 = httpclient.execute(get);
         EmployeeJson employee2 = mapper.readValue(execute2.getEntity().getContent(), EmployeeJson.class);
-        System.out.println("getJson = " + (System.nanoTime() - start));
-        System.out.println("employee2 = " + employee2);
+        System.out.println("getJson = " + (System.currentTimeMillis() - start));
+        //System.out.println("employee2 = " + employee2);
 
-        start = System.nanoTime();
+        start = System.currentTimeMillis();
         HttpPost post = new HttpPost("http://localhost:8080/employee");
         post.setEntity(new ByteArrayEntity(arun.toByteArray()));
         post.addHeader(HttpHeaders.CONTENT_TYPE, "application/x-protobuf");
         httpclient.execute(post);
-        System.out.println("postProto = " + (System.nanoTime() - start));
+        System.out.println("postProto = " + (System.currentTimeMillis() - start));
 
         EmployeeJson employeeJson = new EmployeeJson("Arun", "Kumar", 10, 100000);
 
-        start = System.nanoTime();
+        start = System.currentTimeMillis();
         HttpPost post2 = new HttpPost("http://localhost:8080/employee");
         post2.setEntity(new StringEntity(mapper.writeValueAsString(employeeJson)));
         post2.addHeader(HttpHeaders.CONTENT_TYPE, "application/json");
         httpclient.execute(post2);
-        System.out.println("postJson = " + (System.nanoTime() - start));
+        System.out.println("postJson = " + (System.currentTimeMillis() - start));
 
         httpclient.close();
 
+        EmployeeClient employeeClient = new EmployeeClient("localhost", 8980);
+        start = System.currentTimeMillis();
+        Employee employee1 = employeeClient.getEmployeeWithId(12);
+        System.out.println("GRPC = " + (System.currentTimeMillis() - start));
+        start = System.currentTimeMillis();
+        Employee employee6 = employeeClient.getEmployeeWithId(12);
+        System.out.println("GRPC = " + (System.currentTimeMillis() - start));
+        start = System.currentTimeMillis();
+        Employee employee3 = employeeClient.getEmployeeWithId(12);
+        System.out.println("GRPC = " + (System.currentTimeMillis() - start));
+        start = System.currentTimeMillis();
+        Employee employee4 = employeeClient.getEmployeeWithId(12);
+        System.out.println("GRPC = " + (System.currentTimeMillis() - start));
+        //System.out.println("employee1 = " + employee1);
     }
 }
