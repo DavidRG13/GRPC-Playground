@@ -5,6 +5,8 @@ import com.williamhill.json.EmployeeJson;
 import com.williamhill.protobuf.EmployeeClient;
 import com.williamhill.protobuf.EmployeeService.Employee;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.stream.Collectors;
 import org.apache.http.HttpHeaders;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -58,6 +60,19 @@ public class Main {
         System.out.println("getJson = " + (System.currentTimeMillis() - start));
         //System.out.println("employee2 = " + employee2);
 
+        System.out.println("------JSON------");
+        ArrayList<Long> responseTimesJson = new ArrayList<>(30_000);
+        for (int i = 0; i < 30_000; i++) {
+            HttpGet get1 = new HttpGet("http://localhost:8080/employee/12");
+            get1.addHeader(HttpHeaders.ACCEPT, "application/json");
+            CloseableHttpResponse execute5 = httpclient.execute(get1);
+            EmployeeJson employee8 = mapper.readValue(execute5.getEntity().getContent(), EmployeeJson.class);
+            responseTimesJson.add(System.currentTimeMillis() - start);
+        }
+        responseTimesJson.stream().sorted().collect(Collectors.groupingBy(x -> x))
+            .forEach((responseTime, times) -> System.out.println("responseTime " + responseTime + " ms " + times.size() + " times"));
+
+
         start = System.currentTimeMillis();
         HttpPost post = new HttpPost("http://localhost:8080/employee");
         post.setEntity(new ByteArrayEntity(arun.toByteArray()));
@@ -74,7 +89,6 @@ public class Main {
         httpclient.execute(post2);
         System.out.println("postJson = " + (System.currentTimeMillis() - start));
 
-        httpclient.close();
 
         EmployeeClient employeeClient = new EmployeeClient("localhost", 8980);
         start = System.currentTimeMillis();
@@ -90,5 +104,20 @@ public class Main {
         Employee employee4 = employeeClient.getEmployeeWithId(12);
         System.out.println("GRPC = " + (System.currentTimeMillis() - start));
         //System.out.println("employee1 = " + employee1);
+
+        System.out.println("------GPRC------");
+        ArrayList<Long> responseTimeGprc = new ArrayList<>(30_000);
+        for (int i = 0; i < 30_000; i++) {
+            start = System.currentTimeMillis();
+            Employee employee7 = employeeClient.getEmployeeWithId(12);
+            responseTimeGprc.add(System.currentTimeMillis() - start);
+        }
+
+        responseTimeGprc.stream().sorted().collect(Collectors.groupingBy(x -> x))
+            .forEach((responseTime, times) -> System.out.println("responseTime = " + responseTime + " " + times.size() + " times"));
+
+
+        httpclient.close();
+
     }
 }
