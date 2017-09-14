@@ -1,11 +1,11 @@
-package com.williamhill.protobuf;
+package com.williamhill.json;
 
 public class EmployeeJson {
 
-    String firstname;
-    String lastname;
-    int id;
-    double salary;
+    private String firstname;
+    private String lastname;
+    private int id;
+    private double salary;
 
     public EmployeeJson() {
     }

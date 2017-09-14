@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class EmployeeController {
 
-    @GetMapping(value = "employee/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "employee/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public EmployeeJson employeeByIdJson(@PathVariable("id") final int employeeId) {
         return new EmployeeJson("Pepe", "Pepe", employeeId, 1000.0);
     }
@@ -22,7 +22,7 @@ public class EmployeeController {
         return employeeJson;
     }
 
-    @GetMapping(value = "employee/{id}", consumes = "application/x-protobuf")
+    @GetMapping(value = "employee/{id}", produces = "application/x-protobuf")
     public Employee employeeById(@PathVariable("id") final int employeeId) {
         return Employee.newBuilder().setFirstname("Pepe").setLastname("Pepe").setId(employeeId).setSalary(1000.0).build();
     }
