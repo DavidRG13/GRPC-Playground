@@ -11,16 +11,21 @@ class GetEmployeeSimulation extends Simulation {
   val httpProtocol = http
     .baseURL(s"http://localhost:8080")
 
-  val scn = scenario("getEmployee load test")
+  val scn = scenario("getEmployee json load test")
       .feed(feeder)
       .exec(http("json").get("/employee/${id}").header("Accept", "application/json").check(regex(".*id.*")))
+  val scn2 = scenario("getEmployee proto load test")
+      .feed(feeder)
       .exec(http("proto").get("/employee/${id}").header("Accept", "application/x-protobuf").check(status.is(200)))
 
 
 
   setUp(
     scn.inject(
-      atOnceUsers(5000)
+      rampUsers(5000) over (5 seconds)
+    ),
+    scn2.inject(
+      rampUsers(5000) over (5 seconds)
     )
   ).protocols(httpProtocol)
 }

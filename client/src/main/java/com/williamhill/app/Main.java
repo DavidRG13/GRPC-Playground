@@ -106,16 +106,19 @@ public class Main {
         //System.out.println("employee1 = " + employee1);
 
         System.out.println("------GPRC------");
+        start = System.currentTimeMillis();
         ArrayList<Long> responseTimeGprc = new ArrayList<>(30_000);
         for (int i = 0; i < 30_000; i++) {
-            start = System.currentTimeMillis();
+            final long start2 = System.currentTimeMillis();
             Employee employee7 = employeeClient.getEmployeeWithId(12);
-            responseTimeGprc.add(System.currentTimeMillis() - start);
+            responseTimeGprc.add(System.currentTimeMillis() - start2);
         }
+        final long end = System.currentTimeMillis() - start;
 
         responseTimeGprc.stream().sorted().collect(Collectors.groupingBy(x -> x))
             .forEach((responseTime, times) -> System.out.println("responseTime = " + responseTime + " " + times.size() + " times"));
 
+        System.out.println("GRPC finished in " + end + " ms");
 
         httpclient.close();
 
