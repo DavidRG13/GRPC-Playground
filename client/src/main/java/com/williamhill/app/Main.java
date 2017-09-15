@@ -116,7 +116,7 @@ public class Main {
         final long end = System.currentTimeMillis() - start;
 
         responseTimeGprc.stream().sorted().collect(Collectors.groupingBy(x -> x))
-            .forEach((responseTime, times) -> System.out.println("responseTime = " + responseTime + " " + times.size() + " times"));
+            .forEach((responseTime, times) -> System.out.println(responseTime + " ms " + times.size() + " times"));
 
         System.out.println("GRPC finished in " + end + " ms");
 
