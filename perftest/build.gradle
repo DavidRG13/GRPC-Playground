@@ -9,7 +9,7 @@ dependencies {
     testCompile "io.gatling.highcharts:gatling-charts-highcharts:2.3.0"
 }
 
-task loadTest(type: JavaExec) {
+task jsonLoadTest(type: JavaExec) {
     dependsOn testClasses
     description = "load test with Gatling"
     group = "Load Test"
@@ -21,12 +21,32 @@ task loadTest(type: JavaExec) {
     ]
     main = "io.gatling.app.Gatling"
     args = [
-        "--simulation", "gatling.simulations.GetEmployeeSimulation",
+        "--simulation", "gatling.simulations.JSONGetEmployeeSimulation",
         "--results-folder", "${buildDir}/gatling-results",
         "--binaries-folder", sourceSets.test.output.classesDir.toString(), // ignored because of above bug
         "--bodies-folder", sourceSets.test.resources.srcDirs.toList().first().toString() + "/gatling/bodies",
     ]
 }
+
+task protoLoadTest(type: JavaExec) {
+    dependsOn testClasses
+    description = "load test with Gatling"
+    group = "Load Test"
+    classpath = sourceSets.test.runtimeClasspath
+    jvmArgs = [
+        // workaround for https://github.com/gatling/gatling/issues/2689
+        "-Dgatling.core.directory.binaries=${sourceSets.test.output.classesDir.toString()}",
+        "-Dlogback.configurationFile=${logbackGatlingConfig()}",
+    ]
+    main = "io.gatling.app.Gatling"
+    args = [
+        "--simulation", "gatling.simulations.ProtoGetEmployeeSimulation",
+        "--results-folder", "${buildDir}/gatling-results",
+        "--binaries-folder", sourceSets.test.output.classesDir.toString(), // ignored because of above bug
+        "--bodies-folder", sourceSets.test.resources.srcDirs.toList().first().toString() + "/gatling/bodies",
+    ]
+}
+
 def logbackGatlingConfig() {
     return sourceSets.test.resources.find { it.name == 'logback-gatling.xml' };
 }
