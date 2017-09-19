@@ -30,6 +30,7 @@ dependencies {
     compile "io.grpc:grpc-protobuf:1.6.1"
     compile "io.grpc:grpc-netty:1.6.1"
     compile "io.grpc:grpc-stub:1.6.1"
+    compile group: 'com.google.instrumentation', name: 'instrumentation-api', version: '0.4.3'
     compile 'com.google.protobuf:protobuf-java:3.4.0'
     compile 'com.googlecode.protobuf-java-format:protobuf-java-format:1.4'
     testCompile('org.springframework.boot:spring-boot-starter-test')

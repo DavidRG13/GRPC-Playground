@@ -8,6 +8,7 @@ public class ServiceImplementation extends EmployeesServiceGrpc.EmployeesService
     @Override
     public void getEmployeeById(final EmployeeService.GetEmployeeByIdRequest request, final StreamObserver<EmployeeService.Employee> responseObserver) {
         int employeeId = request.getId();
+        System.out.println("employeeId = " + employeeId);
         EmployeeService.Employee employee = EmployeeService.Employee.newBuilder().setFirstname("Pepe").setLastname("Pepe").setId(employeeId).setSalary(1000.0).build();
 
         responseObserver.onNext(employee);
