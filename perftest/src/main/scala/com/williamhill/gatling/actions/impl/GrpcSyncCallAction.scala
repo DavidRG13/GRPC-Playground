@@ -2,12 +2,9 @@ package com.williamhill.gatling.actions.impl
 
 import com.williamhill.gatling.actions.GrpcExecutableAction
 import com.williamhill.protobuf.EmployeeService.GetEmployeeByIdRequest
-import com.williamhill.protobuf.{EmployeeService, EmployeesServiceGrpc}
+import com.williamhill.protobuf.EmployeesServiceGrpc
 import io.grpc.{ManagedChannelBuilder, StatusRuntimeException}
 
-/**
-  * Sync call action
-  */
 object GrpcSyncCallAction {
   /**
     *
@@ -15,30 +12,20 @@ object GrpcSyncCallAction {
     * @param name           - function name
     * @param host           - server host
     * @param port           - server port
-    * @param id             - message to be send as request
+    * @param toBeSend       - message to be send as request
     * @return               - GrpcSyncCallAction
     */
-  def apply(name: String, host: String, port: Int, id: Int): GrpcSyncCallAction = {
-    println("id: " + id)
-    new GrpcSyncCallAction(name, host, port, id)
-  }
+  def apply(name: String, host: String, port: Int, toBeSend: GetEmployeeByIdRequest): GrpcSyncCallAction = new GrpcSyncCallAction(name, host, port, toBeSend)
 }
 
-class GrpcSyncCallAction(val name: String, host: String, port: Int, id: Int) extends GrpcExecutableAction {
+class GrpcSyncCallAction(val name: String, host: String, port: Int, toBeSend: GetEmployeeByIdRequest) extends GrpcExecutableAction {
 
   var channel = ManagedChannelBuilder.forAddress(host, port).usePlaintext(true).build
   val blockingCall = EmployeesServiceGrpc.newBlockingStub(channel)
 
-  /**
-    * Create sync call to the server
-    * @return Option[GeneratedMessage]
-    */
   override def executeSync = {
-    val employee = GetEmployeeByIdRequest.newBuilder.setId(id).build
-    println("eee: " + employee.toString)
-//    Some(blockingCall.getEmployeeById(employee))
     try
-      Some(blockingCall.getEmployeeById(employee))
+      Some(blockingCall.getEmployeeById(toBeSend))
     catch {
       case e: StatusRuntimeException =>
         System.out.println("RPC failed: " + e.getStatus)

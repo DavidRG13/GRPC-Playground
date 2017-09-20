@@ -34,18 +34,16 @@ class GrpcActionActor(action: GrpcExecutableAction,
 
     try {
       action match {
-        case act: GrpcExecutableAction => {
+        case act: GrpcExecutableAction =>
           optionalResult = act.executeSync
           logResult(optionalResult)
-        }
         case _ => throw new UnsupportedOperationException("Action is not supported")
       }
     }
     catch {
-      case t: Throwable => {
+      case t: Throwable =>
         optionalThrowable = Some(t)
         logResult(None, optionalThrowable)
-      }
     }
 
     /**
@@ -62,14 +60,12 @@ class GrpcActionActor(action: GrpcExecutableAction,
         if (Option(result).nonEmpty) {
           val (newSession, error) = Check.check(result, session, checks)
           error match {
-            case None => {
+            case None =>
               statsEngine.logResponse(session, action.name, timings, OK, None, None)
               next ! newSession(session)
-            }
-            case Some(Failure(errorMessage)) => {
+            case Some(Failure(errorMessage)) =>
               statsEngine.logResponse(session, action.name, timings, KO, None, Some(errorMessage))
               next ! newSession(session).markAsFailed
-            }
           }
         }
         else {

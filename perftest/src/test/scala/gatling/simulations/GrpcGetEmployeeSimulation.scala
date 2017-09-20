@@ -2,7 +2,7 @@ package gatling.simulations
 
 import com.williamhill.gatling.GrpcCustomCheck
 import com.williamhill.gatling.actions.impl.GrpcSyncCallAction
-import com.williamhill.protobuf.EmployeeService.Employee
+import com.williamhill.protobuf.EmployeeService.{Employee, GetEmployeeByIdRequest}
 import io.gatling.core.Predef._
 
 import scala.concurrent.duration._
@@ -17,7 +17,7 @@ class GrpcGetEmployeeSimulation extends Simulation {
   val grpcConfig = GRPC()
 
   val grpcScenario = scenario("Test GRPC server")
-    .exec(grpcCall(GrpcSyncCallAction("sync", host, port, Random.nextInt())).check(GrpcCustomCheck((s: Employee) => {
+    .exec(grpcCall(GrpcSyncCallAction("sync", host, port, GetEmployeeByIdRequest.newBuilder.setId(Random.nextInt()).build)).check(GrpcCustomCheck((s: Employee) => {
       s.getFirstname.equals("Pepe")
     })))
 
